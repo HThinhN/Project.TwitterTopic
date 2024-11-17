@@ -10,3 +10,21 @@ to Apache Spark and from that, the analytic results will be visualized by Plotly
 ## 1. Used tools:
 + ***Programming:*** Python
 + ***Technique:***
+
+## 2. MongoDB: 
+Store tweets data into MongoDB
+
+### Init MongoDB: 
+
+    sudo systemctl start mongod 
+
+## 3. Kafka: 
+
+### Init Kafka: 
+#### Init Zookeeper: 
+    
+    zookeeper-server-start.sh kafka/config/zookeeper.properties
+
+#### Init Kafkaserver
+
+    kafka-server-start.sh kafka/config/server.properties
