@@ -11,3 +11,6 @@ KAFKA_TOPIC = 'twitter_topic'
 ## producer.py
 ## consumer.py
 
+# Sentiment Analysis
+TWEET_DATASET = "tweet_eval"
+SENTIMENT_TYPE = "sentiment"
