@@ -22,41 +22,39 @@ class Sentiment_Analysis:
 
         # Init TfidfVectorizer
         self.vectorizer = TfidfVectorizer(max_features=1000)
+        self.X_train_tfidf = self.vectorizer.fit_transform(self.X_train)
 
         # Build model Logistic Regression
         self.model = LogisticRegression(max_iter=1000)
 
     def preprocessing(self, raw_data = None):
-        if not raw_data: 
-            raw_data = self.X_test
+        data = self.vectorizer.transform(raw_data)
 
-        X_train_tfidf = self.vectorizer.fit_transform(self.X_train)
-        X_test_tfidf = self.vectorizer.transform(raw_data)
-
-        return X_train_tfidf, X_test_tfidf
+        return data
     
-    def train_model(self, X_train_tfidf):
-        self.model.fit(X_train_tfidf, self.y_train)
+    def train_model(self):
+        self.model.fit(self.X_train_tfidf, self.y_train)
     
     def save_model(self, model_name):
         with open(model_name, 'wb') as file:
             pickle.dump(self.model, file)
 
     def run(self, raw_data = None):
-        X_train_tfidf, X_test_tfidf = self.preprocessing(raw_data)
-        self.train_model(X_train_tfidf)
-
         # Using model to predict
-        y_pred  = self.model.predict(X_test_tfidf)
+        if not raw_data: 
+            raw_data = self.X_test
+
+        data = self.preprocessing(raw_data)
+        y_pred  = self.model.predict(data)
 
         # Mapping result to label {negative, neutral, positive}
         label_mapping = {0: 'negative', 1: 'neutral', 2: 'positive'}
         predicted_class = label_mapping[y_pred[0]]
 
-        try: 
+        if raw_data != self.X_test: 
             print(f"Text: {raw_data[0]}")
             print(f"Predicted Sentiment: {predicted_class}")
-        except:
+        else:
             print(classification_report(self.y_test, y_pred, target_names=['negative', 'neutral', 'positive']))
 
 

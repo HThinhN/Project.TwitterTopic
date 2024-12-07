@@ -32,9 +32,10 @@ def main():
 
     # 4. Sentiment Analysis: Sentiment analysis from tweets 
     elif (opt == 4):
-        raw_data = ["I hate using this product, it's so bad!"]
+        # raw_data = ["I hate using this product, it's so bad!"]
         sentiment_analysis = Sentiment_Analysis()
-        sentiment_analysis.run(raw_data)
+        sentiment_analysis.train_model()
+        sentiment_analysis.run()
         print("Sentiment Analysis - Finished")
     
     else: 

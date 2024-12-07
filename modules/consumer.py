@@ -3,6 +3,7 @@ from kafka import KafkaConsumer
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col
 import json
+from sentiment_analysis import Sentiment_Analysis
 
 class Consumer: 
     def __init__(self): 
@@ -15,6 +16,10 @@ class Consumer:
         self.consumer = KafkaConsumer(KAFKA_TOPIC, 
                                 bootstrap_servers=BOOTSTRAP_SERVERS,
                                 value_deserializer=lambda v: json.loads(v.decode('utf-8')))
+        
+        # Sentiment Analysis
+        self.sa = Sentiment_Analysis()
+
         
     # Pull data from Kafka Broker and handle by Spark Streaming
     def process_streaming_data(self):
